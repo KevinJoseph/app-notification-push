@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "95776911768",
+    "project_id": "notification-chincha",
+    "storage_bucket": "notification-chincha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95776911768:android:9eb60a9b3c28d520d53bed",
+        "android_client_info": {
+          "package_name": "com.wa2goose.appchincha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9eAgd_9ugBtdsfELvl_g4_rxczDJx4ZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

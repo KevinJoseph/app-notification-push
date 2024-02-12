@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "notifications-push",
-    "slug": "notifications-push",
+    "slug": "app-notification",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package":"com.wa2goose.appchincha",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c8420741-ec52-4582-bf07-94d79c2eeec5"
+      }
+    },
+    "owner": "vekjs07",
+    "notification": {
+      "vapidPublicKey": "tu_clave_publica_vapid_aqui"
     }
+    
   }
 }
