@@ -13,33 +13,20 @@ import { SplashScreen } from "./src/screens/SplashScreen.jsx"
 import { createStackNavigator } from '@react-navigation/stack'
 import { CardArticles } from "./src/components/ui/CardArticles/index.jsx"
 import DetailScreen from "./src/components/ui/DetailScreen/index.jsx"
+import { HomeScreen } from './src/screens/HomeScreen.jsx'
+
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
+import * as Font from 'expo-font'
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+})
 
 const Stack = createStackNavigator()
-
-const Tab = createBottomTabNavigator()
-
-const ScreensStack = () => {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="Articles" component={CardArticles}
-            options={{
-                headerShown: false
-            }}/>
-            <Stack.Screen name="DetailScreen" component={DetailScreen}
-            options= {{
-                title : "Regresar"
-            }}/>
-        </Stack.Navigator>
-    )
-}
 
 const Notification =  () => {
 
@@ -64,7 +51,17 @@ const Notification =  () => {
 
 export default function App() {
 
-  const [showSplash, setShowSplash] = useState(true)
+    const [showSplash, setShowSplash] = useState(true)
+
+    useEffect(() => {
+        const loadFonts = async () => {
+            await Font.loadAsync({
+                'poppins-regular': require('./src/fonts/Poppins-Regular.ttf'),
+                'poppins-bold': require('./src/fonts/Poppins-Bold.ttf'),
+            })
+            }
+        loadFonts();
+    }, [])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -81,54 +78,21 @@ export default function App() {
             ) : (
                 <>
                     <MenuBar />
-                    <Tab.Navigator
-                        initialRouteName="Inicio"
-                        screenOptions={{
-                            tabBarActiveTintColor: "#9A0518",
-                            tabBarStyle: {
-                                backgroundColor: "#ffffff",
+                    <Stack.Navigator>
+                        <Stack.Screen name="Home" component={HomeScreen}
+                        options={{
+                            headerShown: false
+                        }}/>
+                        <Stack.Screen name="DetailScreen" component={DetailScreen}
+                        options= {{
+                            title : false,
+                            headerStyle : {
+                                backgroundColor : "#ffffff",
+                                height : 38
                             },
-                            tabBarStyle: {
-                                padding: 10,
-                                height: 60
-                            },
-                            tabBarLabelStyle: {
-                                marginBottom: 10,
-                                fontSize: 10
-                            }
-                        }}>
-                        <Tab.Screen name="Inicio" component={ScreensStack}
-                            options={{
-                                tabBarIcon: ({ color, size }) => (
-                                    <AntDesign name="home" size={size} color={color} />
-                                ),
-                                tabBarLabel: "Inicio",
-                                headerShown: false,
-                            }}
-                        />   
-                        <Tab.Screen name="Comunidad" component={ComunidadScreen}
-                            options={{
-                                tabBarIcon: ({ color, size }) => (
-                                    <Feather name="users" size={size} color={color} />
-                                ),
-                                headerTitleAlign: "center",
-                                headerShown: false,
-                                headerStyle: {
-                                    backgroundColor: "#9A0518",
-                                }
-                            }} />
-                        <Tab.Screen name="Contactanos" component={Notification}
-                            options={{
-                                tabBarIcon: ({ color, size }) => (
-                                    <Feather name="phone" size={size} color={color} />
-                                ),
-                                headerTitleAlign: "center",
-                                headerShown: false,
-                                headerStyle: {
-                                    backgroundColor: "#9A0518",
-                                }
-                            }} />
-                    </Tab.Navigator>
+                            headerTintColor : "#514F4F",
+                        }}/>
+                    </Stack.Navigator>
                 </>
             )}
         </NavigationContainer>

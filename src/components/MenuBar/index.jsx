@@ -1,25 +1,68 @@
 import { Image, StyleSheet, Text, View } from "react-native"
 import Constants from "expo-constants"
-import { FontAwesome6 } from '@expo/vector-icons'
+import { format } from "date-fns"
+import * as Font from 'expo-font'
+import { useEffect, useState } from "react"
 
 export const MenuBar = () => {
+
+  const [fontLoaded, setFontLoaded] = useState(false)
+
+    useEffect(() => {
+      const loadFonts = async () => {
+          await Font.loadAsync({
+              'poppins-regular': require('../../fonts/Poppins-Regular.ttf'),
+              'poppins-bold': require('../../fonts/Poppins-Bold.ttf'),
+          })
+          setFontLoaded(true)
+          }
+      loadFonts();
+    }, [])
+
+    if (!fontLoaded) {
+      return <View />;
+    }
+
+    const fechaActual = new Date()
+    const diaSemana = format(fechaActual, "EEEE", { locale: esLocale })
+    const diaMes = format(fechaActual, "d")
+    const mesAbreviado = format(fechaActual, "MMM", { locale: esLocale })
+    const anio = format(fechaActual, "yyyy")
+
+    const fechita = `${diaSemana}, ${diaMes} de ${mesAbreviado} ${anio}`
+
     return (
-        <View style={styles.container}>
-            <Image source={require("../../../assets/iconchincha.png")} style={{width : 100, height : 50}} />
-            <FontAwesome6 name="bars-staggered" size={25} color="white" />
-        </View>
+      <View style={styles.container}>
+        <Image source={require("../../../assets/Logo.png")} style={{ width: 85, height: 45 }} />
+        <Text style={styles.fechitaa}>{fechita}</Text>
+      </View>
     )
 }
 
-const styles = StyleSheet.create({
-    container : {
-        width : "100%",
-        paddingHorizontal : 20,
-        marginTop : Constants.statusBarHeight,
-        backgroundColor : "#9A0518",
-        height : 68,
-        flexDirection : "row",
-        justifyContent : "space-between",
-        alignItems : "center",
+const esLocale = {
+    formatDistance: () => "",
+    formatRelative: () => "",
+    localize: {
+      month: (n) => ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][n],
+      day: (n) => ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"][n],
     },
+    match: /^([DLMXJVSD])|(Ene|Feb|Mar|Abr|May|Jun|Jul|Ago|Sep|Oct|Nov|Dic)|(([Ll]unes|[Mm]artes|[Mm]iércoles|[Jj]ueves|[Vv]iernes|[Ss]ábado) [0-9]|[0-9] ([Ee]ne|[Ff]eb|[Mm]ar|[Aa]br|[Mm]ay|[Jj]un|[Jj]ul|[Aa]go|[Ss]ep|[Oo]ct|[Nn]ov|[Dd]ic))$/i,
+}
+
+const styles = StyleSheet.create({
+    container: {
+      width: "100%",
+      paddingHorizontal: 20,
+      marginTop: Constants.statusBarHeight,
+      backgroundColor: "#ffff",
+      height: 85,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    fechitaa : {
+      fontFamily: 'poppins-bold',
+      fontSize: 12,
+      color: "#878787"
+    }
 })
