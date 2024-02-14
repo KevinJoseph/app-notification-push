@@ -4,7 +4,7 @@ import * as Font from 'expo-font'
 
 const DetailScreen = ({ route }) => {
 
-    const { title, description, image } = route.params
+    const { title, description,date, author,email, image } = route.params
 
     const [fontLoaded, setFontLoaded] = useState(false)
 
@@ -13,6 +13,7 @@ const DetailScreen = ({ route }) => {
             await Font.loadAsync({
                 'poppins-regular': require('../../../fonts/Poppins-Regular.ttf'),
                 'poppins-bold': require('../../../fonts/Poppins-Bold.ttf'),
+                'poppins-light': require('../../../fonts/Poppins-Light.ttf'),
             })
             setFontLoaded(true)
             }
@@ -27,6 +28,13 @@ const DetailScreen = ({ route }) => {
         <ScrollView>
             <View style={styles.ScrollStyle}>
                 <Text style={styles.lbltitle}>{route.params.title}</Text>
+                <View style={{flexDirection : "row", alignItems : "center", justifyContent : "space-between"}}>
+                    <View>
+                        <Text style={{fontFamily : "poppins-bold", fontSize : 10, color : "#9A0518"}}>{route.params.author}</Text>
+                        <Text style={{fontFamily : "poppins-regular", fontSize : 8, color : "#4E4C4C"}}>{route.params.email}</Text>
+                    </View>
+                    <Text style={{fontFamily : "poppins-light", color : "#000", fontSize : 9}}>{route.params.date}</Text>
+                </View>
                 <Image source={{ uri: route.params.image }} style={{ width: "auto", height: 350 }} />
                 <Text  style={styles.lbldescrip}>{route.params.description}</Text>
             </View>

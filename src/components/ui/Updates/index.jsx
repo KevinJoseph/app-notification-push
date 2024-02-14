@@ -21,7 +21,7 @@ export const Updates = () => {
         return <View />;
     }
 
-    const anuncio = "Estamos trabajando para brindarte una experiencia aún mejor. Pronto llegarán nuevas y emocionantes funciones."
+    const anuncio = "Estamos trabajando arduamente para brindarte la mejor experiencia posible. Pronto disfrutarás de nuevas y emocionantes funciones."
 
     return (
         <>

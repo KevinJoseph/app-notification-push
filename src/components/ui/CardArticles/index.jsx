@@ -9,8 +9,8 @@ export const CardArticles = () => {
 
     const navigation = useNavigation()
 
-    const handlePress = (title,description, image) => {
-        navigation.navigate("DetailScreen", { title,description, image })
+    const handlePress = (title, description, date, author,email, image) => {
+        navigation.navigate("DetailScreen", { title, description, date,email, author, image })
     }
 
     const { articles, error, loading } = useArticles()
@@ -39,8 +39,8 @@ export const CardArticles = () => {
             {error && <Text style={styles.textError}>{error.message}</Text>}
             {loading && <Text>Cargando...</Text>}
             <View style={styles.containerCard}>
-                {articles.map(({ title ,description,date,author, image }, index) => (
-                    <TouchableOpacity key={index} onPress={() => handlePress( title,description, image)}>
+                {articles.map(({ title ,description,date,author,email, image }, index) => (
+                    <TouchableOpacity key={index} onPress={() => handlePress( title, description, date, author,email, image)}>
                         <View style={styles.cardBody}>
                             <View style={styles.sectiondata}>
                                 <View style={styles.cardBodyTitle}>
