@@ -1,9 +1,10 @@
 import { Text, useWindowDimensions,ScrollView, View } from "react-native"
 import { TabView, SceneMap, TabBar} from "react-native-tab-view"
 import { CardArticles } from "../components/ui/CardArticles"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Updates } from "../components/ui/Updates"
 import { useFonts } from "expo-font"
+import * as SplashScreen from "expo-splash-screen"
 
 const primeraRuta = () => (
     <ScrollView style={{backgroundColor : "white"}}>
@@ -45,11 +46,26 @@ export const HomeScreen = () => {
         poppinsLight : require("../../assets/fonts/Poppins-Light.ttf")
     })
 
+    useEffect(() => {
+        async function prepare() {
+            await SplashScreen.preventAutoHideAsync() 
+        }
+        prepare()
+    },[])
+
+    const onLayout = useCallback( async () => {
+        if (fontLoaded) {
+            await SplashScreen.hideAsync()
+        }
+    }, [fontLoaded])
+
+
     if (!fontLoaded) return null
 
     return (
         <>
             <TabView
+                onLayout={onLayout}
                 navigationState={{index,routes}}
                 renderScene={renderScene}
                 onIndexChange={setIndex}

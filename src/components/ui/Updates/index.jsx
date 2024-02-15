@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
 import { useFonts } from "expo-font"
+import * as SplashScreen from "expo-splash-screen"
 
 export const Updates = () => {
 
@@ -12,11 +13,24 @@ export const Updates = () => {
         poppinsLight : require("../../../../assets/fonts/Poppins-Light.ttf")
     })
 
+    useEffect(() => {
+        async function prepare() {
+            await SplashScreen.preventAutoHideAsync() 
+        }
+        prepare()
+    },[])
+
+    const onLayout = useCallback( async () => {
+        if (fontLoaded) {
+            await SplashScreen.hideAsync()
+        }
+    }, [fontLoaded])
+
     if (!fontLoaded) return null
 
     return (
         <>
-            <View style={style.containerupdates}>
+            <View style={style.containerupdates} onLayout={onLayout}>
                 <Image source={require("../../../../assets/team-error.png")} style={{width: 264, height: 264}} />
                 <View style={{paddingHorizontal : 20, alignItems : "center", gap : 10}}>
                     <Text style={{fontFamily : "poppinsRegular", textAlign : "center"}}>{anuncio}</Text>

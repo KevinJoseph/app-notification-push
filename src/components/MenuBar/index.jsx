@@ -2,6 +2,8 @@ import { Image, StyleSheet, Text, View } from "react-native"
 import Constants from "expo-constants"
 import { format } from "date-fns"
 import { useFonts } from "expo-font"
+import { useCallback, useEffect } from "react"
+import * as SplashScreen from "expo-splash-screen"
 
 export const MenuBar = () => { 
 
@@ -10,6 +12,20 @@ export const MenuBar = () => {
       poppinsBold : require("../../../assets/fonts/Poppins-Bold.ttf"),
       poppinsLight : require("../../../assets/fonts/Poppins-Light.ttf")
     })
+
+    useEffect(() => {
+      async function prepare() {
+        await SplashScreen.preventAutoHideAsync() 
+      }
+      prepare()
+    },[])
+
+    const onLayout = useCallback( async () => {
+      if (fontLoaded) {
+        await SplashScreen.hideAsync()
+      }
+    }, [fontLoaded])
+
 
     if (!fontLoaded) return null
 
@@ -23,7 +39,7 @@ export const MenuBar = () => {
     const fechita = `${diaSemana}, ${diaMes} de ${mesAbreviado} ${anio}`
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={onLayout}>
         <Image source={require("../../../assets/Logo.png")} style={{ width: 85, height: 45 }} />
         <Text style={styles.fechitaa}>{fechita}</Text>
       </View>

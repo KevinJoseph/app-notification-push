@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
+import * as SplashScreen from "expo-splash-screen"
 
 const DetailScreen = ({ route }) => {
 
@@ -12,10 +13,23 @@ const DetailScreen = ({ route }) => {
         poppinsLight : require("../../../../assets/fonts/Poppins-Light.ttf")
     })
 
+    useEffect(() => {
+        async function prepare() {
+            await SplashScreen.preventAutoHideAsync() 
+        }
+        prepare()
+    },[])
+
+    const onLayout = useCallback( async () => {
+        if (fontLoaded) {
+            await SplashScreen.hideAsync()
+        }
+    }, [fontLoaded])
+
     if (!fontLoaded) return null
 
     return (
-        <ScrollView>
+        <ScrollView  onLayout={onLayout}>
             <View style={styles.ScrollStyle}>
                 <Text style={styles.lbltitle}>{route.params.title}</Text>
                 <View style={{flexDirection : "row", alignItems : "center", justifyContent : "space-between"}}>

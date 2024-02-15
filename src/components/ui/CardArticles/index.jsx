@@ -3,6 +3,8 @@ import { useArticles } from "../../../hooks/useArticles"
 import { useNavigation } from "@react-navigation/native"
 import DetailScreen from "../../ui/DetailScreen"
 import { useFonts } from "expo-font"
+import { useCallback, useEffect } from "react"
+import * as SplashScreen from "expo-splash-screen"
 
 export const CardArticles = () => {
 
@@ -22,10 +24,23 @@ export const CardArticles = () => {
         poppinsLight : require("../../../../assets/fonts/Poppins-Light.ttf")
     })
 
+    useEffect(() => {
+        async function prepare() {
+            await SplashScreen.preventAutoHideAsync() 
+        }
+        prepare()
+    },[])
+
+    const onLayout = useCallback( async () => {
+        if (fontLoaded) {
+            await SplashScreen.hideAsync()
+        }
+    }, [fontLoaded])
+
     if (!fontLoaded) return null
 
     return (
-        <ScrollView>
+        <ScrollView  onLayout={onLayout}>
             {error && <Text style={styles.textError}>{error.message}</Text>}
             {loading && <Text>Cargando...</Text>}
             <View style={styles.containerCard}>
