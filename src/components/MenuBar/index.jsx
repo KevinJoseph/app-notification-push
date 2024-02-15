@@ -1,27 +1,18 @@
 import { Image, StyleSheet, Text, View } from "react-native"
 import Constants from "expo-constants"
 import { format } from "date-fns"
-import * as Font from 'expo-font'
-import { useEffect, useState } from "react"
+import { useFonts } from "expo-font"
 
-export const MenuBar = () => {
+export const MenuBar = () => { 
 
-  const [fontLoaded, setFontLoaded] = useState(false)
+    const [fontLoaded] = useFonts({
+      poppinsRegular : require("../../../assets/fonts/Poppins-Regular.ttf"),
+      poppinsBold : require("../../../assets/fonts/Poppins-Bold.ttf"),
+      poppinsLight : require("../../../assets/fonts/Poppins-Light.ttf")
+    })
 
-    useEffect(() => {
-      const loadFonts = async () => {
-          await Font.loadAsync({
-              'poppins-regular': require('../../fonts/Poppins-Regular.ttf'),
-              'poppins-bold': require('../../fonts/Poppins-Bold.ttf'),
-          })
-          setFontLoaded(true)
-          }
-      loadFonts();
-    }, [])
+    if (!fontLoaded) return null
 
-    if (!fontLoaded) {
-      return <View />;
-    }
 
     const fechaActual = new Date()
     const diaSemana = format(fechaActual, "EEEE", { locale: esLocale })
@@ -61,7 +52,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     fechitaa : {
-      fontFamily: 'poppins-bold',
+      fontFamily: 'poppinsBold',
       fontSize: 12,
       color: "#878787"
     }

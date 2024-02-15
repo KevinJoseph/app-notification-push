@@ -2,8 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "rea
 import { useArticles } from "../../../hooks/useArticles"
 import { useNavigation } from "@react-navigation/native"
 import DetailScreen from "../../ui/DetailScreen"
-import { useEffect, useState } from "react"
-import * as Font from 'expo-font'
+import { useFonts } from "expo-font"
 
 export const CardArticles = () => {
 
@@ -17,22 +16,13 @@ export const CardArticles = () => {
 
     const fechita = new Date().getFullYear()
 
-    const [fontLoaded, setFontLoaded] = useState(false)
+    const [fontLoaded] = useFonts({
+        poppinsRegular : require("../../../../assets/fonts/Poppins-Regular.ttf"),
+        poppinsBold : require("../../../../assets/fonts/Poppins-Bold.ttf"),
+        poppinsLight : require("../../../../assets/fonts/Poppins-Light.ttf")
+    })
 
-    useEffect(() => {
-        const loadFonts = async () => {
-            await Font.loadAsync({
-                'poppins-regular': require('../../../fonts/Poppins-Regular.ttf'),
-                'poppins-bold': require('../../../fonts/Poppins-Bold.ttf'),
-            })
-            setFontLoaded(true)
-            }
-        loadFonts();
-    }, [])
-
-    if (!fontLoaded) {
-        return <View />;
-    }
+    if (!fontLoaded) return null
 
     return (
         <ScrollView>
@@ -82,12 +72,12 @@ const styles = StyleSheet.create({
     fechita : {
         color : "#878787",
         fontSize : 10,
-        fontFamily : "poppins-regular"
+        fontFamily : "poppinsRegular"
     },
     autorcito : {
         color : "#9A0518",
         fontSize : 10,
-        fontFamily : "poppins-bold"
+        fontFamily : "poppinsBold"
     }, 
     cardBody: {
         width: "auto",
@@ -109,7 +99,7 @@ const styles = StyleSheet.create({
     titlestyle : {
         fontSize: 12,
         color: "#000",
-        fontFamily : "poppins-bold"
+        fontFamily : "poppinsBold"
     },
     sectiondata : {
         flexDirection : "row",

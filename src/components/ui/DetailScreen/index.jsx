@@ -1,28 +1,18 @@
 import { useEffect, useState } from "react"
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native"
-import * as Font from 'expo-font'
+import { useFonts } from "expo-font"
 
 const DetailScreen = ({ route }) => {
 
     const { title, description,date, author,email, image } = route.params
 
-    const [fontLoaded, setFontLoaded] = useState(false)
+    const [fontLoaded] = useFonts({
+        poppinsRegular : require("../../../../assets/fonts/Poppins-Regular.ttf"),
+        poppinsBold : require("../../../../assets/fonts/Poppins-Bold.ttf"),
+        poppinsLight : require("../../../../assets/fonts/Poppins-Light.ttf")
+    })
 
-    useEffect(() => {
-        const loadFonts = async () => {
-            await Font.loadAsync({
-                'poppins-regular': require('../../../fonts/Poppins-Regular.ttf'),
-                'poppins-bold': require('../../../fonts/Poppins-Bold.ttf'),
-                'poppins-light': require('../../../fonts/Poppins-Light.ttf'),
-            })
-            setFontLoaded(true)
-            }
-        loadFonts();
-    }, [])
-
-    if (!fontLoaded) {
-        return <View />;
-    }
+    if (!fontLoaded) return null
 
     return (
         <ScrollView>
@@ -30,10 +20,10 @@ const DetailScreen = ({ route }) => {
                 <Text style={styles.lbltitle}>{route.params.title}</Text>
                 <View style={{flexDirection : "row", alignItems : "center", justifyContent : "space-between"}}>
                     <View>
-                        <Text style={{fontFamily : "poppins-bold", fontSize : 10, color : "#9A0518"}}>{route.params.author}</Text>
-                        <Text style={{fontFamily : "poppins-regular", fontSize : 8, color : "#4E4C4C"}}>{route.params.email}</Text>
+                        <Text style={{fontFamily : "poppinsBold", fontSize : 10, color : "#9A0518"}}>{route.params.author}</Text>
+                        <Text style={{fontFamily : "poppinsRegular", fontSize : 8, color : "#4E4C4C"}}>{route.params.email}</Text>
                     </View>
-                    <Text style={{fontFamily : "poppins-light", color : "#000", fontSize : 9}}>{route.params.date}</Text>
+                    <Text style={{fontFamily : "poppinsLight", color : "#000", fontSize : 9}}>{route.params.date}</Text>
                 </View>
                 <Image source={{ uri: route.params.image }} style={{ width: "auto", height: 350 }} />
                 <Text  style={styles.lbldescrip}>{route.params.description}</Text>
@@ -55,14 +45,14 @@ const styles = StyleSheet.create({
         fontSize: 17,
         textAlign: "center",
         color: "#000",
-        fontFamily : "poppins-bold",
+        fontFamily : "poppinsBold",
         //paddingHorizontal: 25,        
     },
     lbldescrip : {
         fontSize: 14,
         textAlign: "justify",
         color: "#4E4C4C",
-        fontFamily : "poppins-regular",
+        fontFamily : "poppinsRegular",
         //paddingHorizontal: 25,
     }
 })

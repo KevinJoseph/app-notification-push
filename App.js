@@ -4,7 +4,6 @@ import { useNotificationHandling } from './components/NotificationHandler';
 import * as Notifications from 'expo-notifications';
 import { createBottomTabNavigator} from "@react-navigation/bottom-tabs"
 import { NavigationContainer } from "@react-navigation/native"
-
 import { ComunidadScreen } from "./src/screens/ComunidadScreen"
 import { AntDesign, Feather} from '@expo/vector-icons'
 import { ContactanosScreen } from "./src/screens/ContactanosScreen.jsx"
@@ -14,9 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { CardArticles } from "./src/components/ui/CardArticles/index.jsx"
 import DetailScreen from "./src/components/ui/DetailScreen/index.jsx"
 import { HomeScreen } from './src/screens/HomeScreen.jsx'
-
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
-import * as Font from 'expo-font'
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -54,19 +51,9 @@ export default function App() {
     const [showSplash, setShowSplash] = useState(true)
 
     useEffect(() => {
-        const loadFonts = async () => {
-            await Font.loadAsync({
-                'poppins-regular': require('./src/fonts/Poppins-Regular.ttf'),
-                'poppins-bold': require('./src/fonts/Poppins-Bold.ttf'),
-            })
-            }
-        loadFonts();
-    }, [])
-
-    useEffect(() => {
         const timer = setTimeout(() => {
         setShowSplash(false)
-        }, 2000)
+        }, 3000)
 
         return () => clearTimeout(timer)
     }, [])
