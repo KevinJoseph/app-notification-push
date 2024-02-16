@@ -3,8 +3,6 @@ import { TabView, SceneMap, TabBar} from "react-native-tab-view"
 import { CardArticles } from "../components/ui/CardArticles"
 import { useCallback, useEffect, useState } from "react"
 import { Updates } from "../components/ui/Updates"
-import { useFonts } from "expo-font"
-import * as SplashScreen from "expo-splash-screen"
 
 const primeraRuta = () => (
     <ScrollView style={{backgroundColor : "white"}}>
@@ -40,32 +38,9 @@ export const HomeScreen = () => {
         { key: 'tercero', title: 'Eventos' }
     ])
 
-    const [fontLoaded] = useFonts({
-        poppinsRegular : require("../../assets/fonts/Poppins-Regular.ttf"),
-        poppinsBold : require("../../assets/fonts/Poppins-Bold.ttf"),
-        poppinsLight : require("../../assets/fonts/Poppins-Light.ttf")
-    })
-
-    useEffect(() => {
-        async function prepare() {
-            await SplashScreen.preventAutoHideAsync() 
-        }
-        prepare()
-    },[])
-
-    const onLayout = useCallback( async () => {
-        if (fontLoaded) {
-            await SplashScreen.hideAsync()
-        }
-    }, [fontLoaded])
-
-
-    if (!fontLoaded) return null
-
     return (
         <>
             <TabView
-                onLayout={onLayout}
                 navigationState={{index,routes}}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
@@ -75,7 +50,7 @@ export const HomeScreen = () => {
                     {...props}
                     indicatorStyle={{backgroundColor : "#9A0518"}}
                     style={{backgroundColor : "#ffff"}}
-                    labelStyle={{ color : "#514F4F", textTransform: "none", fontFamily : "poppinsBold", fontSize : 12}}
+                    labelStyle={{ color : "#514F4F", textTransform: "none", fontWeight : "900", fontSize : 12}}
                     activeColor="#9A0518"/>
             )}/>
         </>

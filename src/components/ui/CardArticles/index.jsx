@@ -2,9 +2,6 @@ import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "rea
 import { useArticles } from "../../../hooks/useArticles"
 import { useNavigation } from "@react-navigation/native"
 import DetailScreen from "../../ui/DetailScreen"
-import { useFonts } from "expo-font"
-import { useCallback, useEffect } from "react"
-import * as SplashScreen from "expo-splash-screen"
 
 export const CardArticles = () => {
 
@@ -18,29 +15,8 @@ export const CardArticles = () => {
 
     const fechita = new Date().getFullYear()
 
-    const [fontLoaded] = useFonts({
-        poppinsRegular : require("../../../../assets/fonts/Poppins-Regular.ttf"),
-        poppinsBold : require("../../../../assets/fonts/Poppins-Bold.ttf"),
-        poppinsLight : require("../../../../assets/fonts/Poppins-Light.ttf")
-    })
-
-    useEffect(() => {
-        async function prepare() {
-            await SplashScreen.preventAutoHideAsync() 
-        }
-        prepare()
-    },[])
-
-    const onLayout = useCallback( async () => {
-        if (fontLoaded) {
-            await SplashScreen.hideAsync()
-        }
-    }, [fontLoaded])
-
-    if (!fontLoaded) return null
-
     return (
-        <ScrollView  onLayout={onLayout}>
+        <ScrollView>
             {error && <Text style={styles.textError}>{error.message}</Text>}
             {loading && <Text>Cargando...</Text>}
             <View style={styles.containerCard}>
@@ -87,12 +63,12 @@ const styles = StyleSheet.create({
     fechita : {
         color : "#878787",
         fontSize : 10,
-        fontFamily : "poppinsRegular"
+        fontWeight : "500"
     },
     autorcito : {
         color : "#9A0518",
-        fontSize : 10,
-        fontFamily : "poppinsBold"
+        fontSize : 11,
+        fontWeight : "900"
     }, 
     cardBody: {
         width: "auto",
@@ -112,9 +88,9 @@ const styles = StyleSheet.create({
         color: "#514F4F",
     },
     titlestyle : {
-        fontSize: 12,
+        fontSize: 12.5,
         color: "#000",
-        fontFamily : "poppinsBold"
+        fontWeight : "900"
     },
     sectiondata : {
         flexDirection : "row",

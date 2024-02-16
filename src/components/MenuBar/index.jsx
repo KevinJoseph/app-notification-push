@@ -1,34 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native"
 import Constants from "expo-constants"
 import { format } from "date-fns"
-import { useFonts } from "expo-font"
-import { useCallback, useEffect } from "react"
-import * as SplashScreen from "expo-splash-screen"
 
 export const MenuBar = () => { 
-
-    const [fontLoaded] = useFonts({
-      poppinsRegular : require("../../../assets/fonts/Poppins-Regular.ttf"),
-      poppinsBold : require("../../../assets/fonts/Poppins-Bold.ttf"),
-      poppinsLight : require("../../../assets/fonts/Poppins-Light.ttf")
-    })
-
-    useEffect(() => {
-      async function prepare() {
-        await SplashScreen.preventAutoHideAsync() 
-      }
-      prepare()
-    },[])
-
-    const onLayout = useCallback( async () => {
-      if (fontLoaded) {
-        await SplashScreen.hideAsync()
-      }
-    }, [fontLoaded])
-
-
-    if (!fontLoaded) return null
-
 
     const fechaActual = new Date()
     const diaSemana = format(fechaActual, "EEEE", { locale: esLocale })
@@ -39,7 +13,7 @@ export const MenuBar = () => {
     const fechita = `${diaSemana}, ${diaMes} de ${mesAbreviado} ${anio}`
 
     return (
-      <View style={styles.container} onLayout={onLayout}>
+      <View style={styles.container}>
         <Image source={require("../../../assets/Logo.png")} style={{ width: 85, height: 45 }} />
         <Text style={styles.fechitaa}>{fechita}</Text>
       </View>
@@ -68,7 +42,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     fechitaa : {
-      fontFamily: 'poppinsBold',
+      fontWeight : "900",
       fontSize: 12,
       color: "#878787"
     }
